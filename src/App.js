@@ -1,12 +1,12 @@
 import './App.css';
 import Form from './components/form.js';
 import Display from './components/display';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/header';
 
 function App() {
 
-  const [imgName,setImgName] = useState('');
+  const [imgUrl,setImgUrl] = useState('');
 
   const [textInput,setTextInput] = useState({
     upperTextInput:'',
@@ -14,26 +14,28 @@ function App() {
   })
 
   const onTextChange = ({target}) =>{
-    setTextInput({...textInput,[target.name]:target.value})
+    setTextInput({...textInput,[target.name]:target.value}) 
   }
 
-  const onSelectedImg = ({target}) => {
-    const imgName = target.value;
-    setImgName(imgName)
-  }  
+  const [memes, setMemes] = useState([])
 
-  let imgOptions = [
-    {
-      value:'disaster_girl',
-      optionName: 'Disaster Girl',
-      url:'/img/disaster_girl.jpg'
-    },
-    {
-      value:'brian_nerd',
-      optionName: 'Brian Nerd',
-      url:'/img/brian_nerd.jpg'
-    }
-  ]
+  useEffect(() => {
+      fetch('https://api.imgflip.com/get_memes').then(x=>x.json()).then(response=>
+         setMemes(response.data.memes)
+       )
+  }, [])
+
+
+  const onSelectedImg = ({target}) => {
+     let selectedUrl = '';
+     const imgName = target.value;
+     memes.forEach((meme)=>{
+       if(meme.name === imgName) {
+          selectedUrl = meme.url
+       }
+     })
+    setImgUrl(selectedUrl);
+  }  
 
   return (
     <div className="App">
@@ -48,12 +50,12 @@ function App() {
     
         <div className='controls_wrapper'>
           <Form 
-            imgOptions={imgOptions}
+            memesOptions={memes}
             onSelectedImg={onSelectedImg} 
             onTextChange={onTextChange}/>
 
           <Display className='display'
-            imgName={imgName} 
+            imgName={imgUrl} 
             upperLine={textInput.upperTextInput} 
             lowerLine={textInput.lowerTextInput} />
         </div>

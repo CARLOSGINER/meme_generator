@@ -5,8 +5,8 @@ function Form (props) {
         <form className='form'>
             <label htmlFor="selectImg">First choose meme image!</label>
             <select name='selectImg' onChange={props.onSelectedImg}>
-                {props.imgOptions.map(img=>(
-                    <option value={img.value}>{img.optionName}</option>
+                {props.memesOptions.map(img=>(
+                    <option key={img.id} value={img.name}>{img.name}</option>
                 ))}
             </select>
             <Input  inputName='upperTextInput' inputChange={props.onTextChange} position='upper'  labelName="Upper line"/>
