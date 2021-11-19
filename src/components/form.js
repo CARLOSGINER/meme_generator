@@ -11,7 +11,7 @@ function Form (props) {
             </select>
             <Input  inputName='upperTextInput' inputChange={props.onTextChange} position='upper'  labelName="Upper line"/>
             <Input  inputName='lowerTextInput' inputChange={props.onTextChange} position='lower' labelName="Lower line"/>
-            <input className='button' type="button" value="Download" />
+            <input className='button' type="button" value="Download" onClick={props.onClickDownload}/>
         </form>
     
     )

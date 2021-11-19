@@ -3,6 +3,8 @@ import Form from './components/form.js';
 import Display from './components/display';
 import { useState, useEffect } from 'react';
 import Header from './components/header';
+import html2canvas from 'html2canvas';
+
 
 function App() {
 
@@ -20,12 +22,14 @@ function App() {
   const [memes, setMemes] = useState([])
 
   useEffect(() => {
-      fetch('https://api.imgflip.com/get_memes').then(x=>x.json()).then(response=>
-         setMemes(response.data.memes)
-       )
+      fetch('https://api.imgflip.com/get_memes').then(x=>x.json()).then(response=>{
+        const filteredMemes = response.data.memes.filter(meme=>meme.box_count === 2);
+        setMemes(filteredMemes)
+      } 
+    )
   }, [])
 
-
+  console.log(memes)
   const onSelectedImg = ({target}) => {
      let selectedUrl = '';
      const imgName = target.value;
@@ -36,6 +40,20 @@ function App() {
      })
     setImgUrl(selectedUrl);
   }  
+
+  
+
+    const onClickDownload = (e)  =>{
+      e.preventDefault();
+      html2canvas(document.querySelector("#capture"),{allowTaint:true,useCORS:true}).then(canvas => {
+        const finalMeme = canvas.toDataURL("img/png")
+        const link = document.createElement('a');
+        link.download='myMeme.png';
+        link.href=finalMeme;
+        link.click();
+    });
+    }
+ 
 
   return (
     <div className="App">
@@ -52,7 +70,8 @@ function App() {
           <Form 
             memesOptions={memes}
             onSelectedImg={onSelectedImg} 
-            onTextChange={onTextChange}/>
+            onTextChange={onTextChange}
+            onClickDownload={onClickDownload}/>
 
           <Display className='display'
             imgName={imgUrl} 

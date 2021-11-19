@@ -2,7 +2,7 @@ function display(props) {
 
 
     return (
-        <div className='display_preview'>
+        <div className='display_preview' id="capture">
             <img src={props.imgName} className='display_img' alt="" />
             <span className='display_upperLine'>{props.upperLine}</span>
             <span className='display_lowerLine'>{props.lowerLine}</span>
