@@ -20,8 +20,8 @@ ________________________________________________________________________________
 **ESTADO Y PENDIENTES**
 
 > Maquetado y layout terminado.
-> Pendientes agregar función de Download con Vanvas html o algun otro módulo.
-> Consumir alguna API que proporcione memes
+> Agregada función de Download con html2canvas.
+> Consumida API de imgflip que proporciona lista de memes
 
 __________________________________________________________________________________________________________________________________________________________________________________
 Carlos Giner © copyright 2021
