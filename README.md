@@ -1,4 +1,4 @@
-**MEME IT ! ** 
+**MEME IT !** 
 
 meme generator app
 
